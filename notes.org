@@ -1,0 +1,12 @@
+* Introduction: Hello, World Below
+This book takes a bottom-up approach.
+** Quotes
+"The true voyage of discovery consists not of going to new places, but of having a new pair of eyes."
+- Marcel Proust
+
+"The only kind of learning which significantly influences behavior is self-discovered or self-appropriated -- truth that has been assimilated in experience."
+- Carl Rogers
+
+"What is last in the order of analysis seems to be first in the order of becoming."
+- Aristotles
+* Chapter 1 - Boolean Logic
