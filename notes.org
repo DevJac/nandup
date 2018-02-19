@@ -10,3 +10,36 @@ This book takes a bottom-up approach.
 "What is last in the order of analysis seems to be first in the order of becoming."
 - Aristotles
 * Chapter 1 - Boolean Logic
+"Such simple things, And we make of them something so complex it defeats us, Almost."
+- John Ashbery
+
+All chips are made of elementary logic gates. There are multiple ways to physically implement these gates, but their logical behavior is consistent.
+** 1.1 - Background
+*** Elementary boolean operators
+Every possible boolean function can be implemented using any of the following:
+- and, or, not
+- nand
+- nor
+*** 16 boolean functions
+There are 16 boolean functions with 2 inputs and one output.
+
+There are two inputs, each of which may have two states, so we have 2^2 = 4 possible inputs to our boolean function.
+
+For each of the 4 inputs into the boolean function, there are two possible outputs. So we have 2^2^2 = 16 possible boolean functions.
+** 1.2 - Specification
+*** Multiplexer and demultiplexer
+A "multiplexer" is a type of gate that takes 2 inputs, and a selector (which is a 3rd input, of sorts), and outputs one of the two inputs based on the selector value.
+
+A "demultiplexer" is the opposite. There is a single input, and a selector (which is a 2nd input, of sorts), and outputs the input to one of two possible outputs based on the selector value.
+*** Multi-bit gates (bus gates)
+Gates usually work on many bits at a time. These many bits are called a "buses".
+
+For example, a 32-bit "or" gate would take two arrays, each containing 32-bits, and perform an "or" operation on each pair of bits, then output a single 32-bit array.
+*** Gates with many inputs
+"And" and "Or" gates naturally extend to taking many inputs. For example, a 16-way "And" gate would take 16 inputs, and output 1 only if all 16 inputs were 1.
+*** Complex multiplexers and demultiplexers
+Multiplexer and demultiplexers that have more than 2 inputs or outputs will require multiple bit selectors.
+** 1.4 - Perspective
+We've paid no attention to efficiency considerations such as number of gates used or the number of wire crossovers.
+* TODO Appendix A (HDL) - Sections A1-A6
+* TODO Hardware Simulator Tutorial - Parts I, II, and III
