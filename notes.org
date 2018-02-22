@@ -41,5 +41,88 @@ For example, a 32-bit "or" gate would take two arrays, each containing 32-bits, 
 Multiplexer and demultiplexers that have more than 2 inputs or outputs will require multiple bit selectors.
 ** 1.4 - Perspective
 We've paid no attention to efficiency considerations such as number of gates used or the number of wire crossovers.
-* TODO Appendix A (HDL) - Sections A1-A6
+** Exercises
+*** Boolean algebra is useful in simplifying circuits
+If you turn a truth table into a boolean formula, you can use boolean algebra to simplify the circuit.
+
+There are things called Karnaugh maps which some say help with the simplification.
+
+Also, saying ~A'~ (with a prime) is a better notation for "not A". It's easier to type for one thing, and also ~A+B~ with a line over the whole thing could mean ~(A+B)'~ or ~(A'+B')~.
+*** I cheated
+I had to look up an efficient way to build a multiplexor. I was suprised to see it could be done with just 4 nand gates. I could have implemented less efficient multiplexor on my own.
+*** Simplifying the Multiplexor
+The instructions say:
+#+BEGIN_EXAMPLE
+/**
+ * Multiplexor:
+ * out = a if sel == 0
+ *       b otherwise
+ */
+#+END_EXAMPLE
+
+Truth table:
+#+BEGIN_EXAMPLE
+a b sel | out
+0 0  0  |  0
+0 0  1  |  0
+0 1  0  |  0
+0 1  1  |  1
+1 0  0  |  1
+1 0  1  |  0
+1 1  0  |  1
+1 1  1  |  1
+#+END_EXAMPLE
+
+Simplify the standard formula using boolean algebra:
+#+BEGIN_EXAMPLE
+a'bs + ab's' + abs' + abs
+a'bs + as'(b' + b) + abs
+a'bs + as' + abs
+as' + a'bs + abs
+as' + bs(a' + a)
+as' + bs
+
+Note: (x or y) = not (x and y) = (x' and' y')
+
+(as')' .' (bs)'
+(a .' s') .' (b .' s)
+#+END_EXAMPLE
+
+The implementation:
+#+BEGIN_EXAMPLE
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    Not(in=sel, out=notSel);
+    Nand(a=a, b=notSel, out=nandA);
+    Nand(a=sel, b=b, out=nandB);
+    Nand(a=nandA, b=nandB, out=out);
+}
+#+END_EXAMPLE
+*** Three ways to simplify boolean functions
+- Boolean algebra
+- Karnaugh maps
+- Quine-McCluskey
+*** Simplifying boolean functions is hard
+After some tangental study, I've realized circuit optimization is hard, and could fill an entire course of study. I've only been trying to optimize the number of nand gates, but reality would be even more compilcated with costs and efficiency concerns. Quantum physics would even be an issue. I'm going to leave the issue and focus on creating gates that are simple and good-enough, and if I want to worry about optimizing them later I can.
+* Appendix A (HDL) - Sections A1-A6
+** Example
+#+BEGIN_SRC
+/** Checks if two 3-bit input buses are equal */
+CHIP EQ3 {
+    IN a[3], b[3];
+    OUT out; // True iff a=b
+    PARTS:
+    Xor(a=a[0], b=b[0], out=c0);
+    Xor(a=a[1], b=b[1], out=c1);
+    Xor(a=a[2], b=b[2], out=c2);
+    Or(a=c0, b=c1, out=c01);
+    Or(a=c01, b=c2, out=neq);
+    Not(in=neq, out=out);
+}
+#+END_SRC
+
+When we use gates (which look like function calls) like ~Xor(...)~, it is assumed that there is a ~Xor.hdl~ file containing the implementation of ~Xor~.
 * TODO Hardware Simulator Tutorial - Parts I, II, and III
