@@ -125,4 +125,6 @@ CHIP EQ3 {
 #+END_SRC
 
 When we use gates (which look like function calls) like ~Xor(...)~, it is assumed that there is a ~Xor.hdl~ file containing the implementation of ~Xor~.
+** Index order is right-to-left
+If we have ~10~ in binary, the ~0~ is in the ~0~ index position.
 * TODO Hardware Simulator Tutorial - Parts I, II, and III
