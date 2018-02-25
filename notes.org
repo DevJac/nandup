@@ -107,6 +107,41 @@ CHIP Mux {
 - Quine-McCluskey
 *** Simplifying boolean functions is hard
 After some tangental study, I've realized circuit optimization is hard, and could fill an entire course of study. I've only been trying to optimize the number of nand gates, but reality would be even more compilcated with costs and efficiency concerns. Quantum physics would even be an issue. I'm going to leave the issue and focus on creating gates that are simple and good-enough, and if I want to worry about optimizing them later I can.
+* Chapter 2 - Boolean Arithmetic
+The Arithmetic Logical Unit (ALU) is the centerpiece chip that executes all the arithmetic and logical operations performed by the computer. Remarkably, most of the operations performed by computers can be reduced to elementary additions of binary numbers.
+** 2.1 - Background
+*** 3-bit adder gates to implement traditional addition
+When adding numbers by hand on paper, you align 2 numbers, and sometimes have a carry digit. Note, you're sort of working with 3 columns while doing this, the 2 numbers make up 2 of those columns, and the carry digit is the 3rd column. 3-bit adder gates can be chained to implement a binary form of the on-paper addition we're accustomed to doing by hand.
+*** Negative binary numbers with the 2's complement method
+In a n-bit system, a negative number x is represented by ~2^n - x~ in binary form. For example, in a 4-bit system we'd have:
+
+#+BEGIN_EXAMPLE
+0 0000
+1 0001 | -1 1111
+2 0010 | -2 1110
+3 0011 | -3 1101
+4 0100 | -4 1100
+5 0101 | -5 1011
+6 0110 | -6 1010
+7 0111 | -7 1001
+         -8 1000
+#+END_EXAMPLE
+
+Note:
+- the minimum and maximum of a n-bit number are ~2^(n-1) - 1~ and ~-2^(n-1)~
+- positive numbers begin with 0, and negative numbers begin with 1
+- adding opposite numbers results in ~2^n~, which would be ~10000~ in this example, but the most significant bit is truncated, resulting in ~0000~, which is the answer we want
+- to negate a number, flip all of its bit and then add 1
+** 2.2 - Specification
+*** The ALU
+The ALU is a circuit which takes 2 16-bit numbers and performs some function on them. The function that is performed is determined by 6 control bits. Each bit indicates that a basic transformation should happen to the inputs, for example, one of the control bits causes one of the inputs to be negated. The two inputs ultimately get combined in some way (either addition or bitwise-and, in this book) and then output.
+
+I wonder what features the ALUs of real CPUs have? I wonder if these ALU functions will end up becoming the keywords of our assembly language? The ALU in this book seems to be based on basic and familiar boolean operations, I wonder if real ALUs might be based on more exotic operations?
+** 2.4 - Perspective
+*** The adder is inefficient
+The adder circuit described in the book is inefficient because of the long delay while the carry bit propagates from the least to most significant bit. Solutions to this problem are known as "carry look-ahead techniques".
+*** ALU vs OS tradeoff
+The ALU in the book has a minimal set of features. Other ALUs might implement more features, like circuits for multiplication and division and floating-point operations. In general, features implemented in the ALU result in more cost, but are more efficient. Features not implemented in the ALU can be implemented in software (in the operating system); this is cheaper, but less efficient.
 * Appendix A (HDL) - Sections A1-A6
 ** Example
 #+BEGIN_SRC
