@@ -142,6 +142,11 @@ I wonder what features the ALUs of real CPUs have? I wonder if these ALU functio
 The adder circuit described in the book is inefficient because of the long delay while the carry bit propagates from the least to most significant bit. Solutions to this problem are known as "carry look-ahead techniques".
 *** ALU vs OS tradeoff
 The ALU in the book has a minimal set of features. Other ALUs might implement more features, like circuits for multiplication and division and floating-point operations. In general, features implemented in the ALU result in more cost, but are more efficient. Features not implemented in the ALU can be implemented in software (in the operating system); this is cheaper, but less efficient.
+** 2.5 - Exercises
+*** Multiplexers are kind of like a switch-statements
+The uses of multiplexers and demultiplexers aren't yet ingrained in me; I understand what they do, but they aren't second nature to me, and I don't think about using them when trying to solve problems.
+
+While implementing the ALU, I saw that multiplexers are kind of like switch-statements from higher level programming languages; one of several possible outputs in chosen by the selector bits.
 * Appendix A (HDL) - Sections A1-A6
 ** Example
 #+BEGIN_SRC
@@ -162,4 +167,56 @@ CHIP EQ3 {
 When we use gates (which look like function calls) like ~Xor(...)~, it is assumed that there is a ~Xor.hdl~ file containing the implementation of ~Xor~.
 ** Index order is right-to-left
 If we have ~10~ in binary, the ~0~ is in the ~0~ index position.
-* TODO Hardware Simulator Tutorial - Parts I, II, and III
+** Constants, true and false
+~true~ and ~false~ are available constants in HDL, representing 1 and 0 respectively.
+** Buses
+Internal bus widths are inferred.
+
+This 16-bit incrementor demonstrates how buses can be defined in multiple part: ~Add16(a=in, b[0]=true, b[1..15]=false, out=out);~
+
+~true~ and ~false~ are inferred to be the correct bus width.
+
+A single bit cannot be expanded into a bus with any built in language feature. However you can use a Mux to do this: ~Mux16(sel=singleBit, 0=false, b=true, out=out);~
+
+A circuit can have multiple outputs, and the outputs can be specific bits from an output bus: ~Not16(in=a, out=b, out[0]=c, out[1..4]=d);~
+* Circuits
+** Chapter 1
+- Nand(a= ,b= ,out=);
+- Not(in= ,out=);
+- Not16(in= ,out=);
+- And(a= ,b= ,out=);
+- And16(a= ,b= ,out=);
+- Or(a= ,b= ,out=);
+- Or16(a= ,b= ,out=);
+- Or8Way(in= ,out=);
+- Xor(a= ,b= ,out=);
+- Mux(a= ,b= ,sel= ,out=);
+- Mux16(a= ,b= ,sel= ,out=);
+- Mux4Way16(a= ,b= ,c= ,d= ,sel= ,out=);
+- Mux8Way16(a= ,b= ,c= ,d= ,e= ,f= ,g= ,h= ,sel= ,out=);
+- DMux(in= ,sel= ,a= ,b=);
+- DMux4Way(in= ,sel= ,a= ,b= ,c= ,d=);
+- DMux8Way(in= ,sel= ,a= ,b= ,c= ,d= ,e= ,f= ,g= ,h=);
+** Chapter 2
+- HalfAdder(a= ,b= ,sum= , carry=);
+- FullAdder(a= ,b= ,c= ,sum= ,carry=);
+- Add16(a= ,b= ,out=);
+- Inc16(in= ,out=);
+- ALU(x= ,y= ,zx= ,nx= ,zy= ,ny= ,f= ,no= ,out= ,zr= ,ng=);
+** Upcoming
+- ARegister(in= ,load= ,out=);
+- Bit(in= ,load= ,out=);
+- CPU(inM= ,instruction= ,reset= ,outM= ,writeM= ,addressM= ,pc=);
+- DFF(in= ,out=);
+- DRegister(in= ,load= ,out=);
+- Keyboard(out=);
+- Memory(in= ,load= ,address= ,out=);
+- PC(in= ,load= ,inc= ,reset= ,out=);
+- RAM16K(in= ,load= ,address= ,out=);
+- RAM4K(in= ,load= ,address= ,out=);
+- RAM512(in= ,load= ,address= ,out=);
+- RAM64(in= ,load= ,address= ,out=);
+- RAM8(in= ,load= ,address= ,out=);
+- Register(in= ,load= ,out=);
+- ROM32K(address= ,out=);
+- Screen(in= ,load= ,address= ,out=);
