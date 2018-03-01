@@ -147,6 +147,32 @@ The ALU in the book has a minimal set of features. Other ALUs might implement mo
 The uses of multiplexers and demultiplexers aren't yet ingrained in me; I understand what they do, but they aren't second nature to me, and I don't think about using them when trying to solve problems.
 
 While implementing the ALU, I saw that multiplexers are kind of like switch-statements from higher level programming languages; one of several possible outputs in chosen by the selector bits.
+* Chapter 3 - Sequential Logic
+Every circuit we've built so far has been "combinational" which have no state. Their output is solely dependent on their input in the current moment.
+
+Now we will learn about sequential circuits and how they can store state.
+** 3.1 - Background
+*** The Clock
+The clock sends an alternating bit to many circuits. All circuits are connected to the same clock (although there might be some exceptions to this in real CPUs?).
+*** Data flip-flop
+In this be we use a "data flip-flop" circuit. A flip-flop outputs the input it received during the last clock tick: ~out(t) = in(t-1)~
+*** Registers
+A register is a flip-flop plus a multiplexer. We loop the output of the flip-flop into one input of the multiplexer; the other input to the multiplexer is the "bit to be set" and comes from elsewhere. The selector of the multiplexer determines whether the flip-flop will continually be fed its own output or if it will be fed a new input. As long as the flip-flop keeps looping, it will maintain the same value (remember: ~out(t) = in(t-1)~). When the pattern is disrupted by the multiplexer we can change the looping value. Thus, we have a register that can store a single bit of state.
+*** RAM
+By organizing registers we can create RAM (random access memory). I haven't thought through the whole implementation, but I can see that a combinational circuit could be built that takes a "memory address" and either reads or writes to a register, or group of registers.
+*** Counter
+A computer can obviously use RAM as a counter, but I think it probably takes multiple clock cycles to increment the value of a register. I think it's going to be useful to have a counter that is syncronized with the clock cycle, and thus we have counters as a separate circuit from RAM.
+** 3.2 - Specification
+*** Flip-flop
+Flip-flops are a built-in gate in this course, just like NAND gates. I need to look into the physical implementation of these gates, since they are the foundation of everything we are building.
+*** Bit vs Register vs RAM
+Bit < Register < RAM
+
+A register is made of bits (also known as "binary cells"), and RAM is made of registers.
+** 3.4 - Perspective
+Understanding flip-flop requires understanding how feedback loops work in combinatorial circuits.
+
+In modern computers, the memory is not always built from flip-flops. Instead, there may be unique physical properties of storage technology that can acheive the same thing.
 * Appendix A (HDL) - Sections A1-A6
 ** Example
 #+BEGIN_SRC
