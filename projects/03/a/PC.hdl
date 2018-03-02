@@ -16,7 +16,9 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    Mux8Way16(a=oldValue, b=aluInc, c=in, d=in, e=false, f=false, g=false, h=false, sel[2]=reset, sel[1]=load, sel[0]=inc, out=registerInput);
-    Register(in=registerInput, load=true, out=oldValue, out=out);
-    ALU(x=oldValue, y=false, zx=false, nx=true, zy=true, ny=true, f=true, no=true, out=aluInc, zr=ignored1, ng=ignored2);
+    Inc16(in=previousValue, out=incValue);
+    Mux16(a=previousValue, b=incValue, sel=inc, out=toMux1);
+    Mux16(a=toMux1, b=in, sel=load, out=toMux2);
+    Mux16(a=toMux2, b=false, sel=reset, out=toRegister);
+    Register(in=toRegister, load=true, out=previousValue, out=out);
 }
