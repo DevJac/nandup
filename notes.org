@@ -243,8 +243,32 @@ The screen is 256 x 512 pixels, which is 8192 16-bit registers, and each row is 
 The screen is controlled by a memory map starting at address 16384 (0x4000).
 **** Keyboard
 When a key is pressed, it's ASCII code appears at address 24576 (0x6000). The value is 0 if no keys are pressed.
+**** Memory Order
+0 to 16383 is data memory, 16384 to 24575 is video memory, 24576 is keyboard input memory.
 ** 4.3 - Perspective
 The assembly described in the book is simpler than most.
+* Chapter 5 - Computer Architecture
+"Form ever follows function."
+- Louis Sullivan
+
+"Form IS function."
+- Ludwig Mies van der Rohe
+
+This will be the pinnacle of our hardware journey.
+** 5.1 - Background
+"The most unique feature of the digital computer is its amazing versatility. Here is a machine with finite hardware that can perform a practically infinite array of tasks."
+
+The key to this flexibility is the "stored program" concept, in which the contents of memory determine which computations and actions the computer performs. Thus, the computer can do practically anything, if only its memory values are set correctly.
+** 5.2 - The Hack Hardware Platform Specification
+The machine language specification from chapter 4 leaves very little wiggle room for the hardware specification. The machine language specification and the hardware platform specification are like two different perspectives of the same system.
+
+The only new thing I picked up from the hardware platform specification is that the CPU actually has 3 registers, A, D, and PC (program counter), but only A and D are accessible from assembly. The PC (program counter) keeps track of which instruction from ROM is to be executed next. On second thought, the assembly can interact with the PC through jump commands, but never refers to the register specifically as "PC". The PC register is separated from the assembly language by a thin abstraction.
+
+Of course, while the machine language specification and hardware platform specification provide two different views of the same behavior, the implementation of that behavior in hardware is not necessarily straight forward.
+** 5.4 - Perspective
+The Hack computer is rather minimal. Typically computer platforms have more registers, more data types, more powerful ALUs, and a richer instruction set. Yet all computer platforms fundamentally follow the the same conceptual paradigm: the von Neumann architecture.
+
+Most of the effort in real world computer architecture design is spent on performance enhancements such as memory hierarchies (cache), better access to I/O devices, pipelining, parallelism, instruction prefetching, and other optimizations. None of these optimizations have been discussed in this book.
 * Appendix A (HDL) - Sections A1-A6
 ** Example
 #+BEGIN_SRC
