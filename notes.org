@@ -173,6 +173,30 @@ A register is made of bits (also known as "binary cells"), and RAM is made of re
 Understanding flip-flop requires understanding how feedback loops work in combinatorial circuits.
 
 In modern computers, the memory is not always built from flip-flops. Instead, there may be unique physical properties of storage technology that can acheive the same thing.
+* Chapter 4 - Machine Language
+"Make everything as simple as possible, but not simpler."
+- Albert Einstein
+
+"Machine language is the most profound interface in the overall computer enterprise -- the fine line where hardware and software meet."
+** 4.1 - Background
+The processor executes instructions encoded in binary. Assembly is a simple symbolic abstraction of this binary format. Assembly is converted into binary by an "assembler".
+
+Assembly often has direct support for pointers, meaning the hardware itself must have builtin support for handling pointers.
+
+Control flow in assembly is done with jumps which are much like "gotos" in other languages.
+** 4.2 - Hack Machine Language Specification
+- There are two memories: instruction memory and data memory.
+- Assembly arithmetic and logical instructions operate on two registers: ~A~ and ~D~.
+- ~M~ in the Hack assembly language refers to the data memory value at the address in register ~A~.
+*** Instructions
+A-Instruction: ~@value~ loads ~value~ into the A register
+C-Instruction: ~dest=comp;jump~; if ~dest~ or ~jump~ are emtpy, then ~=~ or ~;~ may be omitted, respectively
+*** Symbols
+- Predefined symbols: ~R0~ through ~R15~, ~SP~, ~LCL~, ~ARG~, ~THIS~, ~THAT~ (the latter symbols overlap with ~R0~ through ~R4~)
+- ~(Labels)~
+- Variables will be turned into static register addresses at compile time.
+** 4.3 - Perspective
+The assembly described in the book is simpler than most.
 * Appendix A (HDL) - Sections A1-A6
 ** Example
 #+BEGIN_SRC
