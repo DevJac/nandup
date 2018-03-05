@@ -191,6 +191,7 @@ Control flow in assembly is done with jumps which are much like "gotos" in other
 *** Instructions
 A-Instruction: ~@value~ loads ~value~ into the A register
 C-Instruction: ~dest=comp;jump~; if ~dest~ or ~jump~ are emtpy, then ~=~ or ~;~ may be omitted, respectively
+C-Instruction binary format: ~i xx a cccccc ddd jjj~
 **** Possible dest values:
 Any combination of the 3 capital letters: ~AMD~
 
@@ -244,7 +245,19 @@ The screen is controlled by a memory map starting at address 16384 (0x4000).
 **** Keyboard
 When a key is pressed, it's ASCII code appears at address 24576 (0x6000). The value is 0 if no keys are pressed.
 **** Memory Order
-0 to 16383 is data memory, 16384 to 24575 is video memory, 24576 is keyboard input memory.
+0 to 16383 is data memory, 16384 to 24575 is screen memory, 24576 is keyboard input memory.
+
+#+BEGIN_EXAMPLE
+000 0000 0000 0000
+Data memory
+011 1111 1111 1111
+
+100 0000 0000 0000
+Screen memory
+101 1111 1111 1111
+
+110 0000 0000 0000 - Keyboard input memory
+#+END_EXAMPLE
 ** 4.3 - Perspective
 The assembly described in the book is simpler than most.
 * Chapter 5 - Computer Architecture
@@ -335,11 +348,11 @@ A circuit can have multiple outputs, and the outputs can be specific bits from a
 - RAM4K(in=, load=, address=, out=);
 - RAM16K(in=, load=, address=, out=);
 - PC(in=, load=, inc=, reset=, out=);
-** Upcoming
-- ARegister(in=, load=, out=);
-- CPU(inM=, instruction=, reset=, outM=, writeM=, addressM=, pc=);
-- DRegister(in=, load=, out=);
+** Chapter 5
 - Keyboard(out=);
-- Memory(in=, load=, address=, out=);
-- ROM32K(address=, out=);
 - Screen(in=, load=, address=, out=);
+- Memory(in=, load=, address=, out=);
+- ARegister(in=, load=, out=);
+- DRegister(in=, load=, out=);
+- ROM32K(address=, out=);
+- CPU(inM=, instruction=, reset=, outM=, writeM=, addressM=, pc=);
